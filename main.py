@@ -36,6 +36,10 @@ def main() -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     # No trailing newline: the gate counts every character.
     out.write_text(ENTRY, encoding="utf-8")
+    # Verify the round-trip: what the grader reads must be exactly the
+    # line we chose — a stray newline or encoding slip would fail the
+    # gate silently, so refuse to finish with a mismatched file.
+    assert out.read_text(encoding="utf-8") == ENTRY, "entry.txt mismatch"
 
 
 if __name__ == "__main__":
